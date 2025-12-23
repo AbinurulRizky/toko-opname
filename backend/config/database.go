@@ -3,16 +3,17 @@ package config
 import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"toko-opname/models"
 
 	"os"
-	"fmt"
+	"log"
 	"time"
+	"fmt"
 )
 
 var DB *gorm.DB
-var err error
 
-func InitDB() {
+func InitDB() *gorm.DB {
 	dbHost := os.Getenv("DB_HOST")
 	dbUser := os.Getenv("DB_USER")
 	dbPassword := os.Getenv("DB_PASSWORD")
@@ -25,26 +26,27 @@ func InitDB() {
 	maxAttempts := 5
 	delay := 3 * time.Second
 
+	var err error
 	for attempts := 1; attempts <= maxAttempts; attempts++ {
-		fmt.Printf("Attempting to connect to the database (Attempt %d/%d)\n", attempts, maxAttempts)
 		DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
-
-		if err == nil {
-			sqlDB, _ := DB.DB()
-			err = sqlDB.Ping()
-		}
-
-		if err == nil {
-			fmt.Println("Successfully connected to the database.")
-			break
-		}
-		
-		fmt.Printf("Failed to connect to the database: %v\n", err)
-		if err != nil && attempts < maxAttempts {
-			fmt.Printf("Retrying in %v...\n", delay)
+		if err != nil {
+			log.Printf("Attempting connect to database... attempt: %d/%d", attempts, maxAttempts)
+			log.Printf("Retrying in %s...", delay)
 			time.Sleep(delay)
 		} else {
-			panic ("Could not connect to the database after several attempts.")
+			log.Println("Connected to database successfully")
+			break
 		}
 	}
+
+	if err != nil {
+		log.Fatalf("Couldn't connect to database: %v", err)
+	}
+
+	err = DB.AutoMigrate(&models.User{})
+	if err != nil {
+		log.Fatalf("Auto migration failed: %v", err)
+	}
+
+	return DB
 }
