@@ -5,6 +5,7 @@ import (
 	"github.com/joho/godotenv"
 	"net/http"
 	"toko-opname/config"
+	"toko-opname/routes"
 
 	"os"
 )
@@ -22,5 +23,7 @@ func main() {
 	server.GET("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H {"message": "pong"})
 	})
+	apiRoutes := server.Group("/api")
+	routes.AuthRoutes(apiRoutes)
 	server.Run(":" + port)
 }
