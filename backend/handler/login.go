@@ -52,7 +52,7 @@ func LoginUser(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{
 		"token": signedToken,
-		"Role": user.Role,
+		"role": user.Role,
 		"message": "Login Successful",
 	})
 }

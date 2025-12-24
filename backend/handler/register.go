@@ -34,10 +34,18 @@ func RegisterUser(c *gin.Context) {
 		Username: req.Username,
 		Email: req.Email,
 		HashedPassword: string(hashedPassword),
+		CabangID: req.CabangID,
+		Role: models.EmployeeRole,
+	}
+
+	if user.Role == models.EmployeeRole && user.CabangID == nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Employees must be assigned to a branch."})
+		return
 	}
 
 	if err := config.DB.Create(&user).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create user"})
+		return
 	}
 
 	c.JSON(http.StatusCreated, gin.H{"message": "User registered successfully"})

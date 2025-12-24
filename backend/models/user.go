@@ -14,4 +14,5 @@ type User struct {
 	HashedPassword string `gorm:"not null"`
 	// 2 role options: 'Owner' and 'Employee'
 	Role string `gorm:"type:varchar(50);not null;default:'Employee'"`
+	CabangID *uint `gorm:"index"`
 }
