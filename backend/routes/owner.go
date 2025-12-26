@@ -10,5 +10,7 @@ import (
 func OwnerRoutes(router *gin.RouterGroup) {
 	router.POST("/register", middleware.AuthMiddleware, middleware.OwnerOnly, handler.RegisterUser)
 	router.POST("/owner/createcabang", middleware.AuthMiddleware, middleware.OwnerOnly, handler.CreateCabang)
+	
 	router.GET("/owner/employees", middleware.AuthMiddleware, middleware.OwnerOnly, handler.ShowEmployee)
+	router.GET("/owner/cabangs", middleware.AuthMiddleware, middleware.OwnerOnly, handler.ShowCabang)
 }

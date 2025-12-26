@@ -30,5 +30,26 @@ func CreateCabang(c *gin.Context) {
 }
 
 func ShowCabang(c *gin.Context) {
-	
+	cabangs := []models.Cabang{}
+	db := config.DB
+
+	result := db.Find(&cabangs)
+
+	if result.Error != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed fetch data cabang."})
+		return
+	}
+
+	var response []dto.ShowCabang
+	for _, u := range cabangs {
+		res := dto.ShowCabang {
+			ID:		u.ID,
+			Name: 	u.Name,
+			Location: u.Location,
+		}
+
+		response = append(response, res)
+	}
+
+	c.JSON(http.StatusOK, response)
 }
