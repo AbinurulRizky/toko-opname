@@ -22,7 +22,6 @@ export default function Login() {
         console.log(successData.role)
 
         localStorage.setItem("token", successData.token)
-        
         alert(successData.message)
       } else {
         const errorData = data as ApiError
