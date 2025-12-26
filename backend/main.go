@@ -37,5 +37,6 @@ func main() {
 	apiRoutes := server.Group("/api")
 	routes.AuthRoutes(apiRoutes)
 	routes.OwnerRoutes(apiRoutes)
+	routes.EmployeeRoutes(apiRoutes)
 	server.Run(port)
 }
