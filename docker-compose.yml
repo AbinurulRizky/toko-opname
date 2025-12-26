@@ -1,0 +1,12 @@
+services:
+  frontend-toko:
+    build:
+      context: ./frontend
+    container_name: toko-opname
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}

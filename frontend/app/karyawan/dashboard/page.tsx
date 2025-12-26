@@ -9,7 +9,7 @@ export default function DashboardPage() {
       {/* SIDEBAR */}
       <aside className="w-64 bg-indigo-600 text-white flex flex-col">
         <div className="p-6 text-2xl font-bold border-b border-indigo-500">
-          🧑‍💼 Karyawan
+          Opname
         </div>
 
         <nav className="flex-1 p-4 space-y-3">
@@ -28,7 +28,7 @@ export default function DashboardPage() {
         </nav>
 
         <div className="p-4 border-t border-indigo-500 text-sm">
-          © 2025 Company
+          © 2025 Opname
         </div>
       </aside>
 
