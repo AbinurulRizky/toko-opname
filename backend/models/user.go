@@ -15,4 +15,6 @@ type User struct {
 	// 2 role options: 'Owner' and 'Employee'
 	Role string `gorm:"type:varchar(50);not null;default:'Employee'"`
 	CabangID *uint `gorm:"index"`
+
+	Cabang Cabang `gorm:"foreignKey:CabangID"`
 }

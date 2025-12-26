@@ -28,3 +28,7 @@ func CreateCabang(c *gin.Context) {
 
 	c.JSON(http.StatusCreated, gin.H{"message": "Success create cabang"})
 }
+
+func ShowCabang(c *gin.Context) {
+	
+}
